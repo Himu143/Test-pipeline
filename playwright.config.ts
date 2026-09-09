@@ -15,7 +15,7 @@ declare const process: {
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
-const appUrl = process.env.BASE_URL ?? 'http://localhost:5173';
+const appUrl = process.env.BASE_URL ?? 'https://mycaregivingcircle.org/';
 
 export default defineConfig({
   testDir: './tests',
