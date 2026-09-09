@@ -1,0 +1,8 @@
+{
+  "version": "2",
+  "phaseApp": "Circle-WebApp",
+  "appId": "a068c9c2-59b5-4ebb-b9ed-cb076a71b4dd",
+  "defaultEnv": "Development",
+  "envId": "d7fac484-bc83-4e2a-ae21-56e613209a16",
+  "monorepoSupport": false
+}

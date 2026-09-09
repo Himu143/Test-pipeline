@@ -1,0 +1,44 @@
+# syntax=docker/dockerfile:1
+
+FROM node:24-alpine AS dependencies
+WORKDIR /app
+
+RUN corepack enable
+
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
+RUN pnpm install --frozen-lockfile
+
+FROM dependencies AS build
+WORKDIR /app
+
+COPY . .
+
+ARG PUBLIC_BASE_API
+ARG PUBLIC_BASE_RESOURCE_API
+ARG PUBLIC_RESOURCE_ASSET_URL
+ARG PUBLIC_BASE_AUTH_URL
+ARG PUBLIC_BASE_BOOKMARK_API
+ARG PUBLIC_BASE_USER_TRAINING_API
+ARG PUBLIC_ENGLISH_USER_GUIDE_URL
+ARG PUBLIC_SPANISH_USER_GUIDE_URL
+
+ENV PUBLIC_BASE_API=$PUBLIC_BASE_API \
+	PUBLIC_BASE_RESOURCE_API=$PUBLIC_BASE_RESOURCE_API \
+	PUBLIC_RESOURCE_ASSET_URL=$PUBLIC_RESOURCE_ASSET_URL \
+	PUBLIC_BASE_AUTH_URL=$PUBLIC_BASE_AUTH_URL \
+	PUBLIC_BASE_BOOKMARK_API=$PUBLIC_BASE_BOOKMARK_API \
+	PUBLIC_ENGLISH_USER_GUIDE_URL=$PUBLIC_ENGLISH_USER_GUIDE_URL \
+	PUBLIC_SPANISH_USER_GUIDE_URL=$PUBLIC_SPANISH_USER_GUIDE_URL \
+	PUBLIC_BASE_USER_TRAINING_API=$PUBLIC_BASE_USER_TRAINING_API
+
+RUN pnpm exec svelte-kit sync && pnpm build
+
+FROM nginx:1.27-alpine AS runtime
+
+COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/build /usr/share/nginx/html
+
+EXPOSE 80
+
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
+	CMD wget -qO- http://127.0.0.1/healthz || exit 1

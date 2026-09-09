@@ -1,0 +1,17 @@
+.DS_Store
+.git
+.gitea
+.svelte-kit
+.vscode
+build
+node_modules
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.env
+.env.*
+!.env.example
+!.env.test
+src/lib/paraglide
+project.inlang/cache
