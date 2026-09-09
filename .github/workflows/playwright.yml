@@ -13,7 +13,7 @@ jobs:
 
     env:
       CI: true
-      BASE_URL: http://127.0.0.1:5173
+      BASE_URL: http://localhost:5173/
       PUBLIC_BASE_API: ${{ vars.STAGING_PUBLIC_BASE_API || 'https://sdp-dev.mycaregivingcircle.org' }}
       PUBLIC_BASE_AUTH_URL: ${{ vars.STAGING_PUBLIC_BASE_AUTH_URL || 'https://sdp-dev.mycaregivingcircle.org/auth/api/v1' }}
 
