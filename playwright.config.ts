@@ -15,7 +15,7 @@ declare const process: {
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
-const appUrl = process.env.BASE_URL ?? 'http://127.0.0.1:5173';
+const appUrl = process.env.BASE_URL ?? 'http://localhost:5173';
 
 export default defineConfig({
   testDir: './tests',
@@ -80,8 +80,9 @@ export default defineConfig({
     : {
         /* Run the local dev server when no external base URL is provided. */
         webServer: {
-          command: 'pnpm run dev -- --host 127.0.0.1 --port 5173',
+          command: 'pnpm exec vite dev --host 127.0.0.1 --port 5173',
           url: appUrl,
+          timeout: 120_000,
           reuseExistingServer: !process.env.CI,
         },
       }),
