@@ -16,14 +16,15 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     env:
-      PUBLIC_BASE_API: ${{ vars.PUBLIC_BASE_API || '' }}
-      PUBLIC_BASE_RESOURCE_API: ${{ vars.PUBLIC_BASE_RESOURCE_API || '' }}
-      PUBLIC_RESOURCE_ASSET_URL: ${{ vars.PUBLIC_RESOURCE_ASSET_URL || '' }}
-      PUBLIC_BASE_AUTH_URL: ${{ vars.PUBLIC_BASE_AUTH_URL || '' }}
-      PUBLIC_BASE_BOOKMARK_API: ${{ vars.PUBLIC_BASE_BOOKMARK_API || '' }}
-      PUBLIC_BASE_USER_TRAINING_API: ${{ vars.PUBLIC_BASE_USER_TRAINING_API || '' }}
-      PUBLIC_ENGLISH_USER_GUIDE_URL: ${{ vars.PUBLIC_ENGLISH_USER_GUIDE_URL || '' }}
-      PUBLIC_SPANISH_USER_GUIDE_URL: ${{ vars.PUBLIC_SPANISH_USER_GUIDE_URL || '' }}
+      PUBLIC_BASE_API: ${{ vars.PUBLIC_BASE_API || 'http://localhost:5173' }}
+      PUBLIC_BASE_RESOURCE_API: ${{ vars.PUBLIC_BASE_RESOURCE_API || 'http://localhost:5173/dw/api/v1' }}
+      PUBLIC_RESOURCE_ASSET_URL: ${{ vars.PUBLIC_RESOURCE_ASSET_URL || 'https://directus-dev.mycaregivingcircle.org/assets' }}
+      PUBLIC_BASE_AUTH_URL: ${{ vars.PUBLIC_BASE_AUTH_URL || 'http://localhost:5173/auth/api/v1' }}
+      PUBLIC_BASE_ASSESSMENT_URL: ${{ vars.PUBLIC_BASE_ASSESSMENT_URL || 'https://sdp-dev.mycaregivingcircle.org/assessment/api/v1' }}
+      PUBLIC_BASE_BOOKMARK_API: ${{ vars.PUBLIC_BASE_BOOKMARK_API || 'http://localhost:5173/bookmark/api/v1' }}
+      PUBLIC_BASE_USER_TRAINING_API: ${{ vars.PUBLIC_BASE_USER_TRAINING_API || 'http://localhost:5173/training/api/v1' }}
+      PUBLIC_ENGLISH_USER_GUIDE_URL: ${{ vars.PUBLIC_ENGLISH_USER_GUIDE_URL || 'https://directus-dev.mycaregivingcircle.org/assets/4330a7d8-db11-4cd6-a326-54e5f0c3a5b8?key=system-large-contain&v=2026-07-29T07%3A45%3A57.927Z' }}
+      PUBLIC_SPANISH_USER_GUIDE_URL: ${{ vars.PUBLIC_SPANISH_USER_GUIDE_URL || 'https://directus-dev.mycaregivingcircle.org/assets/595cff8c-84a6-4d59-a2dd-56a9b94c7b94?key=system-large-contain&v=2026-07-29T07%3A45%3A57.927Z' }}
 
     steps:
       - name: Checkout repository

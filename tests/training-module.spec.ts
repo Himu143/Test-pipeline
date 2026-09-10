@@ -131,6 +131,14 @@ async function ensureAuthenticated(page: Page) {
 }
 
 test.beforeEach(async ({ page }) => {
+	await page.route('**/auth/api/v1/me', async (route) => {
+		await route.fulfill({
+			status: 200,
+			contentType: 'application/json',
+			body: JSON.stringify({ email: testEmail, fullName: 'Test User', role: 'user' })
+		});
+	});
+
 	await page.route('**/auth/api/v1/login', async (route) => {
 		const request = route.request();
 		const { email, password } = request.postDataJSON() as {
@@ -157,7 +165,7 @@ test.beforeEach(async ({ page }) => {
 		});
 	});
 
-	await page.route('**/items/training_modules*', async (route) => {
+	await page.route('**/dw/api/v1/items/training_modules*', async (route) => {
 		await route.fulfill({
 			status: 200,
 			contentType: 'application/json',
@@ -187,6 +195,22 @@ test.beforeEach(async ({ page }) => {
 			body: JSON.stringify({
 				data: []
 			})
+		});
+	});
+
+	await page.route('**/bookmark/api/v1/bookmarks/**', async (route) => {
+		await route.fulfill({
+			status: 200,
+			contentType: 'application/json',
+			body: JSON.stringify({ data: [] })
+		});
+	});
+
+	await page.route('**/training/api/v1/user-cohorts/**', async (route) => {
+		await route.fulfill({
+			status: 200,
+			contentType: 'application/json',
+			body: JSON.stringify({ data: [] })
 		});
 	});
 

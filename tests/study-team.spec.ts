@@ -19,6 +19,14 @@ async function ensureAuthenticated(page: Page) {
 }
 
 test.beforeEach(async ({ page }) => {
+	await page.route('**/auth/api/v1/me', async (route) => {
+		await route.fulfill({
+			status: 200,
+			contentType: 'application/json',
+			body: JSON.stringify({ email: testEmail, fullName: 'Test User', role: 'user' })
+		});
+	});
+
 	await page.route('**/auth/api/v1/login', async (route) => {
 		const { email, password } = route.request().postDataJSON() as {
 			email?: string;
@@ -49,6 +57,46 @@ test.beforeEach(async ({ page }) => {
 			status: 200,
 			contentType: 'application/json',
 			body: JSON.stringify({ message: 'Support request received' })
+		});
+	});
+
+	await page.route('**/bookmark/api/v1/bookmarks/**', async (route) => {
+		await route.fulfill({
+			status: 200,
+			contentType: 'application/json',
+			body: JSON.stringify({ data: [] })
+		});
+	});
+
+	await page.route('**/training/api/v1/user-cohorts/**', async (route) => {
+		await route.fulfill({
+			status: 200,
+			contentType: 'application/json',
+			body: JSON.stringify({ data: [] })
+		});
+	});
+
+	await page.route('**/dw/api/v1/items/training_modules*', async (route) => {
+		await route.fulfill({
+			status: 200,
+			contentType: 'application/json',
+			body: JSON.stringify({ data: [] })
+		});
+	});
+
+	await page.route('**/training/api/v1/user-training*', async (route) => {
+		await route.fulfill({
+			status: 200,
+			contentType: 'application/json',
+			body: JSON.stringify({ data: [] })
+		});
+	});
+
+	await page.route('**/dw/api/v1/items/resource_categories*', async (route) => {
+		await route.fulfill({
+			status: 200,
+			contentType: 'application/json',
+			body: JSON.stringify({ data: [] })
 		});
 	});
 
