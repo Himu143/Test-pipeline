@@ -15,6 +15,15 @@ jobs:
   playwright:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    env:
+      PUBLIC_BASE_API: ${{ vars.PUBLIC_BASE_API || '' }}
+      PUBLIC_BASE_RESOURCE_API: ${{ vars.PUBLIC_BASE_RESOURCE_API || '' }}
+      PUBLIC_RESOURCE_ASSET_URL: ${{ vars.PUBLIC_RESOURCE_ASSET_URL || '' }}
+      PUBLIC_BASE_AUTH_URL: ${{ vars.PUBLIC_BASE_AUTH_URL || '' }}
+      PUBLIC_BASE_BOOKMARK_API: ${{ vars.PUBLIC_BASE_BOOKMARK_API || '' }}
+      PUBLIC_BASE_USER_TRAINING_API: ${{ vars.PUBLIC_BASE_USER_TRAINING_API || '' }}
+      PUBLIC_ENGLISH_USER_GUIDE_URL: ${{ vars.PUBLIC_ENGLISH_USER_GUIDE_URL || '' }}
+      PUBLIC_SPANISH_USER_GUIDE_URL: ${{ vars.PUBLIC_SPANISH_USER_GUIDE_URL || '' }}
 
     steps:
       - name: Checkout repository
