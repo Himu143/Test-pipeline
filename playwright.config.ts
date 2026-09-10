@@ -15,7 +15,7 @@ declare const process: {
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
-const appUrl = process.env.BASE_URL ?? 'https://mycaregivingcircle.org/';
+const appUrl = process.env.BASE_URL ?? 'http://127.0.0.1:5173';
 
 export default defineConfig({
   testDir: './tests',
@@ -75,10 +75,14 @@ export default defineConfig({
     // },
   ],
 
-  /* Run your local dev server before starting the tests */
-  webServer: {
-    command: 'pnpm run dev',
-    url: appUrl,
-    reuseExistingServer: !process.env.CI,
-  },
+  ...(process.env.BASE_URL
+    ? {}
+    : {
+        /* Run the local dev server when no external base URL is provided. */
+        webServer: {
+          command: 'pnpm run dev -- --host 127.0.0.1 --port 5173',
+          url: appUrl,
+          reuseExistingServer: !process.env.CI,
+        },
+      }),
 });
